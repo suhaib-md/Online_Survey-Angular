@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Survey Application</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body ng-app="survey">
+  <div ng-app="survey" ng-controller="SurveyController">
+    <h1>Survey Application</h1>
+    <div id="survey-form">
+      <h2>Take a Survey</h2>
+      <form ng-submit="SubmitSurvey()">
+        <label for="name">Your Name:</label>
+        <input type="text" ng-model="participantName" required>
+        
+        <label for="email">Your Email:</label>
+        <input type="email" ng-model="participantEmail" required>
+        
+        <h3>Survey Questions:</h3>
+        <ol type="1">
+          <li ng-repeat="question in surveyQuestions">
+            <strong>{{ question.text }}</strong><br>
+            <label ng-repeat="option in question.options">
+              <input type="radio" ng-model="question.selectedOption" ng-value="option"> {{ option }}
+            </label><br>
+          </li>
+        </ol>
+        
+        <button type="submit">Submit Survey</button>
+      </form>
+    </div>
+    <div id="survey-results">
+      <h2>Survey Results</h2>
+      <div class="post" ng-repeat="result in surveyResults">
+        <p><strong>Name:</strong> {{ result.participantName }}</p>
+        <p><strong>Email:</strong> {{ result.participantEmail }}</p>
+        <h3>Selected Answers:</h3>
+        <ul>
+          <li ng-repeat="question in result.surveyAnswers">
+            <strong>{{ question.text }}</strong>: {{ question.selectedOption }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
